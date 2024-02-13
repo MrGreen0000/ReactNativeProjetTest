@@ -79,6 +79,7 @@ function App(): React.JSX.Element {
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
+            <Text style={styles.title}>Hello world !</Text>
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -112,6 +113,9 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  title: {
+    fontSize: 40,
   },
 });
 
