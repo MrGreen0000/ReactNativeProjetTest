@@ -1,68 +1,69 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {PropsWithChildren, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const App = () => {
-  const [flexDirection, setFlexDirection] = useState('column');
-
+  const Stack = createNativeStackNavigator();
   return (
-    // <ScrollView>
-    //   <View style={styles.container}>
-    //     <Text style={styles.textBlue}>Hello world !!!{'\n'}</Text>
-    //     <Text style={styles.textRed}>Hello world !!! {'\n'}</Text>
-    //     <Text style={styles.textPurple}>Hello world !!!{'\n'}</Text>
-    //     <Text style={styles.textBlack}>Hello world !!! {'\n'}</Text>
-    //   </View>
-    //   <View
-    //     style={{
-    //       width: 50,
-    //       height: 50,
-    //       backgroundColor: 'powderblue',
-    //     }}></View>
-    //   <View
-    //     style={{
-    //       width: 100,
-    //       height: 100,
-    //       backgroundColor: 'skyblue',
-    //     }}></View>
-    //   <View
-    //     style={{
-    //       width: 150,
-    //       height: 150,
-    //       backgroundColor: 'steelblue',
-    //     }}></View>
-    // </ScrollView>
-    // <View style={{flex: 1}}>
-    //   <View style={{flex: 1, backgroundColor: 'powderblue'}} />
-    //   <View style={{flex: 2, backgroundColor: 'skyblue'}} />
-    //   <View style={{flex: 3, backgroundColor: 'steelblue'}} />
-    // </View>
-    // <View style={{height: '100%'}}>
-    //   <View style={{height: '20%', backgroundColor: 'red'}} />
-    //   <View style={{height: '30%', width: '66%', backgroundColor: 'yellow'}} />
-    //   <View style={{height: '50%', width: '33%', backgroundColor: 'green'}} />
-    // </View>
-
-    // <View
-    //   style={[
-    //     styles.container,
-    //     {
-    //       flexDirection: 'column',
-    //     },
-    //   ]}>
-    //   <View style={{flex: 1, backgroundColor: 'red'}} />
-    //   <View style={{flex: 2, backgroundColor: 'darkorange'}} />
-    //   <View style={{flex: 3, backgroundColor: 'green'}} />
-    // </View>
-    <PreviewLayout
-      label="flexDirection"
-      values={['column', 'row', 'row-reverse', 'column-verse']}
-      selectedValue={flexDirection}
-      setSelectedValue={setFlexDirection}>
-      <View style={[styles.box, {backgroundColor: 'powderblue'}]} />
-      <View style={[styles.box, {backgroundColor: 'skyblue'}]} />
-      <View style={[styles.box, {backgroundColor: 'steelblue'}]} />
-    </PreviewLayout>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Test" component={Test} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    // <PreviewLayout
+    //   label="direction"
+    //   selectedValue={direction}
+    //   values={['ltr', 'rtl']}
+    //   setSelectedValue={setDirection}>
+    //   <View style={[styles.box, {backgroundColor: 'powderblue'}]} />
+    //   <View style={[styles.box, {backgroundColor: 'skyblue'}]} />
+    //   <View style={[styles.box, {backgroundColor: 'steelblue'}]} />
+    // </PreviewLayout>
   );
+};
+
+const HomeScreen = ({navigation}: any) => {
+  return (
+    <View>
+      <Button
+        title="Go to Jane's profile"
+        onPress={() => navigation.navigate('Profile', {name: 'Jane'})}
+      />
+      <Button
+        title="Go to Test"
+        onPress={() => navigation.navigate('Test', {name: 'test'})}
+      />
+    </View>
+  );
+};
+
+const ProfileScreen = ({navigation, route}: any) => {
+  const [direction, setDirection] = useState('ltr');
+  return (
+    <View>
+      <Text>This is {route.params.name}'s profile</Text>
+      <PreviewLayout
+        label="direction"
+        selectedValue={direction}
+        values={['ltr', 'rtl']}
+        setSelectedValue={setDirection}>
+        <View style={[styles.box, {backgroundColor: 'powderblue'}]} />
+        <View style={[styles.box, {backgroundColor: 'skyblue'}]} />
+        <View style={[styles.box, {backgroundColor: 'steelblue'}]} />
+      </PreviewLayout>
+    </View>
+  );
+};
+
+const Test = ({route}: any) => {
+  return <Text>Test {route.params.name}</Text>;
 };
 
 type PreviewLayoutProps = PropsWithChildren<{
@@ -144,35 +145,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 20,
-//   },
-// });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     marginTop: 50,
-//   },
-//   textBlue: {
-//     color: 'blue',
-//     fontSize: 10,
-//     fontWeight: 'bold',
-//   },
-//   textRed: {
-//     color: 'red',
-//     fontSize: 20,
-//   },
-//   textPurple: {
-//     color: 'purple',
-//     fontSize: 30,
-//   },
-//   textBlack: {
-//     color: 'black',
-//     fontSize: 40,
-//   },
-// });
 
 export default App;
